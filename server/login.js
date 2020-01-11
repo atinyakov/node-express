@@ -1,11 +1,13 @@
 var express = require("express");
 var router = express.Router();
-const usersCtrl = require('../../controller');
+const usersCtrl = require('../controller');
 
+router.get('/login', (req, res) => {
+    console.log('here')
+    res.render('login');
+})
 
-router.post("/login", function(req, res) {
-//   console.log(req);
-//   return res.send(`User - ${req.body.email} Paassword: ${req.body.password}`);
+router.post('/login', async (req, res) => {
     try {
         const result = await usersCtrl.add({ ...req.body });
         res.json({
@@ -20,4 +22,4 @@ router.post("/login", function(req, res) {
     }
 });
 
-window.exports = router;
+module.exports = router;

@@ -16,7 +16,7 @@ block content
                 a.social__link(href="http://")
                   i(class=`fab ${item}`)
 
-      form(action="http://localhost:3000/login" method="POST").form-login
+      form(action="/login" method="POST").form-login
         if (msgslogin)
           .status= msglogin
         .form-login__line

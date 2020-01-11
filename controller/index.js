@@ -1,6 +1,6 @@
 const db = require('../db');
 
-exports.add = ({ username, email, password }) => new Promise(async (resolve, reject) => {
+exports.add = ({ email, password }) => new Promise(async (resolve, reject) => {
     try {
     //   const { error, value } = Joi.validate({ username, email, password }, schema);
     //   if (error) {
@@ -10,7 +10,7 @@ exports.add = ({ username, email, password }) => new Promise(async (resolve, rej
     //   const id = uuidv4();
       const newUser = {
         // id,
-        username,
+        // username,
         email,
         password
       };
