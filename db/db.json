@@ -7,6 +7,32 @@
     {
       "email": "akoff16@gmail.com",
       "password": "aehae"
+    },
+    {
+      "email": "njknj@test.com",
+      "password": "knjkn"
+    },
+    {
+      "email": "fg@test.com",
+      "password": "234"
+    }
+  ],
+  "skills": [
+    {
+      "number": "3",
+      "text": "Возраст начала занятий на скрипке"
+    },
+    {
+      "number": "3",
+      "text": "Концертов отыграл"
+    },
+    {
+      "number": "3",
+      "text": "Максимальное число городов в туре"
+    },
+    {
+      "number": "3",
+      "text": "Лет на сцене в качестве скрипача"
     }
   ]
 }
