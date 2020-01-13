@@ -1,32 +1,33 @@
 var express = require('express');
 var router = express.Router();
-const usersCtrl = require('../controller')
+const usersCtrl = require('../controller');
 const validation = require('../utils/validation');
 const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
+const db = require("../db");
 
 router.get('/admin', (req,res) => {
-  res.render('admin')
+  var data = {
+    msgskill: req.flash('info')[0],
+    msgfile: req.flash('form-info')[0],
+    skills: db.get('skills').value(),
+  };
+  res.render('admin', data)
 })
 
 router.post('/admin/skills', async (req, res) => {
   const { age, concerts, cities, years } = req.body;
-  // console.log('age', age)
+
   const errors = validation.skills({ age, concerts, cities, years });
   if (errors.length) {
     req.flash('info', errors.join('. '));
     res.redirect('/admin');
   } else {
     try {
-        const result = await usersCtrl.skills({ ...req.body });
+        const result = await usersCtrl.skills(req.body);
 
         if(result) {
-          // let data = {
-          //   msgskill: req.flash('info', 'Навыки обновлены'),
-          // }
-
-          // console.log(data)
           req.flash('info', 'Навыки обновлены');
           res.redirect(302, '/admin');
         }
@@ -51,11 +52,9 @@ router.post('/admin/upload', function(req, res) {
   }
 
   form.uploadDir = path.join(upload);
-  console.log(req)
 
   form.parse(req, function(err, fields, files) {
     if (err) {
-      // console.log(files)
       if (fs.existsSync(files.photo.path)) {
         fs.unlinkSync(files.photo.path);
       }
@@ -76,7 +75,7 @@ router.post('/admin/upload', function(req, res) {
       const fileName = path.join(upload, files.photo.name);
       fs.renameSync(files.photo.path, fileName);
       // removes the server\\public a part of the path
-      const dir = fileName.replace('server\\public', '');
+      const dir = fileName.replace('\\public', '');
 
       db.defaults({ products: [] })
         .get('products')

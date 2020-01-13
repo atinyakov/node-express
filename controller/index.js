@@ -1,25 +1,9 @@
 const db = require("../db");
-// const adapter = new FileSync('db.json')
-// const db = low(adapter)
-
-// const low = require('lowdb')
-// const FileSync = require('lowdb/adapters/FileSync')
-
-// const adapter = new FileSync('../db/db.json')
-// const db = low(adapter)
 
 exports.add = ({ email, password }) =>
   new Promise(async (resolve, reject) => {
     try {
-      //   const { error, value } = Joi.validate({ username, email, password }, schema);
-      //   if (error) {
-      //     return reject(error);
-      //   }
-
-      //   const id = uuidv4();
       const newUser = {
-        // id,
-        // username,
         email,
         password
       };
@@ -34,19 +18,38 @@ exports.add = ({ email, password }) =>
     }
   });
 
-exports.skills = (arr) => 
-new Promise(async (resolve, reject) => {
-  try {
-      let skills = db.get('skills').value();
+exports.skills = arr =>
+  new Promise(async (resolve, reject) => {
+    try {
+      let skills = db.get("skills").value();
 
-      Object.keys(arr).forEach((key, index)=>{
-        [...skills][index].number = arr[key]
-     });
+      Object.keys(arr).forEach((key, index) => {
+        [...skills][index].number = arr[key];
+      });
 
-      db.set('skills', skills)
+      db.set("skills", skills).write();
+
+      resolve("ok");
+    } catch (err) {
+      reject(err);
+    }
+  });
+
+exports.posts = ({name, email, message}) =>
+  new Promise(async (resolve, reject) => {
+
+    try {
+      const newPost = {
+        name,
+        email,
+        message
+      };
+
+      db.get("emails")
+        .push(newPost)
         .write();
 
-      resolve('ok');
+      resolve(newPost);
     } catch (err) {
       reject(err);
     }

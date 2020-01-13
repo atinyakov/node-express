@@ -7,6 +7,7 @@ var flash = require("connect-flash");
 var session = require("express-session");
 var connect = require("connect");
 var cookieParser = require("cookie-parser");
+const usersCtrl = require("../controller");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -35,9 +36,31 @@ app.use(require("./admin"));
 
 app.get("/", function(req, res) {
   var data = {
-    skills: db.get("skills").value()
+    skills: db.get("skills").value(),
+    products: db.get("products").value(),
+    msgemail: req.flash("info")[0]
   };
   res.render("index", data);
+});
+
+app.post("/", async (req, res) => {
+
+  if (!req.body.name || !req.body.email || !req.body.message) {
+    req.flash("info", "Нужно заполнить все поля!");
+    res.redirect("/");
+  } else {
+    try {
+      const result = await usersCtrl.posts({ ...req.body });
+      if (result) {
+        req.flash("info", "Отправлено");
+        res.redirect("/");
+      }
+    } catch (err) {
+      res.status(400).json({
+        message: err.message
+      });
+    }
+  }
 });
 
 app.listen(3000, function() {
