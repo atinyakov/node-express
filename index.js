@@ -1,4 +1,11 @@
-const db = require("../db");
+// const express = require("express");
+// const app = express();
+// const bodyParser = require("body-parser");
+// const router = express.Router();
+// const db = require("../db");
+// var flash = require("connect-flash");
+// var session = require("express-session");
+// var connect = require("connect");
 // var cookieParser = require("cookie-parser");
 // const usersCtrl = require("../controller");
 
@@ -13,6 +20,7 @@ const db = require("../db");
 //     saveUninitialized: false
 //   })
 // );
+// app.use(flash());
 
 // app.set("views", "../source/template/pages");
 // app.set("view engine", "pug");
@@ -62,57 +70,39 @@ const db = require("../db");
 // module.exports = app;
 
 const Koa = require('koa');
-const app = new Koa();
 const Router = require('koa-router');
-const router = new Router();
 const serve = require('koa-static');
-const session = require('koa-session');
-var flash = require('koa-connect-flash');
 const path = require('path')
-const loginRouter = require('./login')
-const adminRouter = require('./admin')
+const router = new Router();
 
+const app = new Koa();
 app.use(serve('../public') );
 
-app.use(
-  session(
-    {
-      key: 'sessionkey',
-      maxAge: 86400000,
-      overwrite: true,
-      httpOnly: true,
-      signed: false,
-      rolling: false,
-      renew: false,
-    },
-    app
-  )
-);
-
-app.use(flash());
-
+// const Pug = require('koa-pug');
 const Pug = require('koa-pug') ;
+     const pug = new Pug({
+         viewPath: '../source/template/pages',
+        //  basedir: './views',
+         app: app //Equivalent to app.use(pug)
+     });
 
-const pug = new Pug({
-    viewPath: path.resolve(__dirname,'..', 'source', 'template', 'pages'),
-    basedir: path.resolve(__dirname,'..', 'source', 'template', 'pages'),
-    app: app //Equivalent to app.use(pug)
-});
-
+// console.log(path.resolve(__dirname, './views'))
+// app.use( async(ctx, next) => {
+//     ctx.body = 'Hello world!';
+// });
 
 router.get('/', async function(ctx, next) {
-    var data = {
-    skills: db.get("skills").value(),
-    products: db.get("products").value(),
-    msgemail: ctx.flash("info")[0]
-  };
-  await ctx.render('index', data);
+  await ctx.render('index');
 });
 
+// app.use(async ctx => {
+//   await ctx.render('index.pug')
+// })
 
+// router.get('/', async function(ctx, next) {
+//   ctx.render('index');
+// });
 
-app.use(loginRouter.routes()); // определяем в конце приложения
-app.use(adminRouter.routes()); // определяем в конце приложения
 app.use(router.routes()); // определяем в конце приложения
 
 app.listen(3000, function() {

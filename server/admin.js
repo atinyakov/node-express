@@ -1,22 +1,26 @@
-var express = require('express');
-var router = express.Router();
-const usersCtrl = require('../controller');
-const validation = require('../utils/validation');
-const fs = require('fs');
-const path = require('path');
-const formidable = require('formidable');
+// var express = require('express');
+// var router = express.Router();
+// const usersCtrl = require('../controller');
+// const validation = require('../utils/validation');
+// const fs = require('fs');
+// const path = require('path');
+// const formidable = require('formidable');
 const db = require("../db");
+const Router = require('koa-router');
+const router = new Router({ prefix: '/admin' })
 
-router.get('/admin', (req,res) => {
+
+
+router.get('/', async(ctx) => {
   var data = {
-    msgskill: req.flash('info')[0],
-    msgfile: req.flash('form-info')[0],
+    msgskill: ctx.flash('info')[0],
+    msgfile: ctx.flash('form-info')[0],
     skills: db.get('skills').value(),
   };
-  res.render('admin', data)
+  await ctx.render('admin', data)
 })
 
-router.post('/admin/skills', async (req, res) => {
+router.post('/skills', async (req, res) => {
   const { age, concerts, cities, years } = req.body;
 
   const errors = validation.skills({ age, concerts, cities, years });
@@ -42,7 +46,7 @@ router.post('/admin/skills', async (req, res) => {
 });
 
 
-router.post('/admin/upload', function(req, res) {
+router.post('/upload', function(req, res) {
   const form = new formidable.IncomingForm();
   const upload = path.join('..', 'public', 'upload');
 
