@@ -1,5 +1,6 @@
 const db = require("../db");
 const usersCtrl = require("../controller");
+const fs = require("fs")
 const Koa = require("koa");
 const app = new Koa();
 const Router = require("koa-router");
@@ -77,6 +78,10 @@ app.use(
 app.use(loginRouter.routes()); // определяем в конце приложения
 app.use(adminRouter.routes()); // определяем в конце приложения
 app.use(router.routes()); // определяем в конце приложения
+
+if (!fs.existsSync(path.join(process.cwd(), "..", "public", "upload"))) {
+  fs.mkdirSync(path.join(process.cwd(), "..", "public", "upload"));
+}
 
 app.listen(3000, function() {
   console.log("Server running on https://localhost:3000");

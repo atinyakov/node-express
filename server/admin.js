@@ -1,15 +1,14 @@
-const usersCtrl = require('../controller');
-const validation = require('../utils/validation');
-const fs = require('fs');
-const path = require('path');
-const formidable = require('formidable');
-const flash = require('koa-connect-flash');
+const usersCtrl = require("../controller");
+const validation = require("../utils/validation");
+const fs = require("fs");
+const path = require("path");
+const flash = require("koa-connect-flash");
 const db = require("../db");
 const Router = require("koa-router");
 const router = new Router({ prefix: "/admin" });
 
 router.get("/", async ctx => {
-  console.log(`beforadmin`)
+  console.log(`beforadmin`);
 
   var data = {
     msgskill: ctx.flash("info")[0],
@@ -47,48 +46,22 @@ router.post("/upload", async (ctx, next) => {
   const errors = validation.uploadFile({ name, size, title, price });
   if (errors.length) {
     fs.unlinkSync(filePath);
-    ctx.flash('form-info', errors.join('. '));
-    ctx.redirect('/admin');
+    ctx.flash("form-info", errors.join(". "));
+    ctx.redirect("/admin");
   } else {
-    const fileName = path.join(
-      process.cwd(),
-      '..',
-      'public',
-      'upload',
-      name
-      );
+    const fileName = path.join(process.cwd(), "..", "public", "upload", name);
 
-      if (!fs.existsSync(path.join(process.cwd(),
-        '..',
-        'public',
-        'upload'))) {
-        fs.mkdirSync(path.join(process.cwd(),
-        '..',
-        'public',
-        'upload'))
-      }
-      // console.log(filePath)
-    fs.renameSync(filePath, fileName)
-    //  err => {
-    //   if (err) {
-    //     if (fs.existsSync(filePath)) {
-    //       fs.unlinkSync(filePath);
-    //     }
-    //     ctx.flash('form-info', 'Возникла ошибка при обработке');
-    //     ctx.redirect('/admin');
-    //   } else {
-        const dir = path.join('upload', name);
-        db.defaults({ products: [] })
-          .get('products')
-          .push({ src: dir, name: title, price })
-          .write();
+    fs.renameSync(filePath, fileName);
 
-        ctx.flash('form-info', 'Форма обработана');
-      console.log(`beforadmin`)
+    const dir = path.join("upload", name);
+    db.defaults({ products: [] })
+      .get("products")
+      .push({ src: dir, name: title, price })
+      .write();
 
-        ctx.redirect('/admin');
-      // }
-    // });
+    ctx.flash("form-info", "Форма обработана");
+
+    ctx.redirect("/admin");
   }
 });
 
