@@ -57,15 +57,26 @@ router.post("/upload", async (ctx, next) => {
       'upload',
       name
       );
+
+      if (!fs.existsSync(path.join(process.cwd(),
+        '..',
+        'public',
+        'upload'))) {
+        fs.mkdirSync(path.join(process.cwd(),
+        '..',
+        'public',
+        'upload'))
+      }
       // console.log(filePath)
-    fs.rename(filePath, fileName, err => {
-      if (err) {
-        if (fs.existsSync(filePath)) {
-          fs.unlinkSync(filePath);
-        }
-        ctx.flash('form-info', 'Возникла ошибка при обработке');
-        ctx.redirect('/admin');
-      } else {
+    fs.renameSync(filePath, fileName)
+    //  err => {
+    //   if (err) {
+    //     if (fs.existsSync(filePath)) {
+    //       fs.unlinkSync(filePath);
+    //     }
+    //     ctx.flash('form-info', 'Возникла ошибка при обработке');
+    //     ctx.redirect('/admin');
+    //   } else {
         const dir = path.join('upload', name);
         db.defaults({ products: [] })
           .get('products')
@@ -76,8 +87,8 @@ router.post("/upload", async (ctx, next) => {
       console.log(`beforadmin`)
 
         ctx.redirect('/admin');
-      }
-    });
+      // }
+    // });
   }
 });
 
