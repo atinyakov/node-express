@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 const usersCtrl = require('../controller');
 const validation = require('../utils/validation');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
 const formidable = require('formidable');
 const db = require("../db");
 
@@ -45,11 +45,6 @@ router.post('/admin/skills', async (req, res) => {
 router.post('/admin/upload', function(req, res) {
   const form = new formidable.IncomingForm();
   const upload = path.join('..', 'public', 'upload');
-
-
-  if (!fs.existsSync(upload)) {
-    fs.mkdirSync(upload);
-  }
 
   form.uploadDir = path.join(upload);
 

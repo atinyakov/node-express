@@ -84,6 +84,16 @@
       "src": "./assets/img/products/Work9.jpg",
       "name": "Вино вдохновение",
       "price": 600
+    },
+    {
+      "src": "..\\upload\\591dcaf326412323a766dc28261ef4f9.jpg",
+      "name": "1",
+      "price": "1"
+    },
+    {
+      "src": "..\\upload\\591dcaf326412323a766dc28261ef4f9.jpg",
+      "name": "1",
+      "price": "1"
     }
   ],
   "emails": [
@@ -101,6 +111,21 @@
       "name": "d",
       "email": "",
       "message": ""
+    },
+    {
+      "name": "1",
+      "email": "23@test.com",
+      "message": "11@"
+    },
+    {
+      "name": "nm",
+      "email": "nj@rwa.com",
+      "message": "nkj"
+    },
+    {
+      "name": "23",
+      "email": "lkn@test.com",
+      "message": "nljn"
     }
   ]
 }

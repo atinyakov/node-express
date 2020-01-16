@@ -8,6 +8,9 @@ var session = require("express-session");
 var connect = require("connect");
 var cookieParser = require("cookie-parser");
 const usersCtrl = require("../controller");
+const fs = require('fs');
+const path = require('path');
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -62,6 +65,10 @@ app.post("/", async (req, res) => {
     }
   }
 });
+
+if (!fs.existsSync(path.join(process.cwd(), "..", "public", "upload"))) {
+  fs.mkdirSync(path.join(process.cwd(), "..", "public", "upload"));
+}
 
 app.listen(3000, function() {
   console.log("Example app listening on port 3000!");
