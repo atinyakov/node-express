@@ -19,23 +19,27 @@
     {
       "email": "akoff16@gmail.com",
       "password": "123456"
+    },
+    {
+      "email": "nnn2@test.com",
+      "password": " kj"
     }
   ],
   "skills": [
     {
-      "number": "3",
+      "number": "22",
       "text": "Возраст начала занятий на скрипке"
     },
     {
-      "number": "3",
+      "number": "2",
       "text": "Концертов отыграл"
     },
     {
-      "number": "3",
+      "number": "2",
       "text": "Максимальное число городов в туре"
     },
     {
-      "number": "3",
+      "number": "2",
       "text": "Лет на сцене в качестве скрипача"
     }
   ],
@@ -84,6 +88,26 @@
       "src": "./assets/img/products/Work9.jpg",
       "name": "Вино вдохновение",
       "price": 600
+    },
+    {
+      "src": "upload\\591dcaf326412323a766dc28261ef4f9.jpg",
+      "name": "2",
+      "price": "2"
+    },
+    {
+      "src": "upload\\591dcaf326412323a766dc28261ef4f9.jpg",
+      "name": "2",
+      "price": "2"
+    },
+    {
+      "src": "upload\\Cropped_20191028_2317.jpg",
+      "name": "2",
+      "price": "2"
+    },
+    {
+      "src": "upload\\Cropped_20191028_2317.jpg",
+      "name": "2",
+      "price": "2"
     }
   ],
   "emails": [
@@ -101,6 +125,11 @@
       "name": "d",
       "email": "",
       "message": ""
+    },
+    {
+      "name": "jn",
+      "email": "1@test.com",
+      "message": "n "
     }
   ]
 }
